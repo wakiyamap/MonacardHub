@@ -39,8 +39,5 @@ jobs:
       - name: download monacard1 metadata
         run: |
           php admin/script_download_monacard1_metadata.php > monacard1.0metadata.7z
-          ls
-          ls admin/
-          7z x monacard1.0metadata.7z
-          ls
-          
+          7z x data/monacard1.0metadata.7z
+          ls data
