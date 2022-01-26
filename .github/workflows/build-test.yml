@@ -39,4 +39,7 @@ jobs:
       - name: download monacard1 metadata
         run: |
           php admin/script_download_monacard1_metadata.php
+          ls
+          ls admin/
+          which 7z
           
