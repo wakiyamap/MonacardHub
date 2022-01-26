@@ -1,0 +1,42 @@
+name: build-test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        operating-system: [ 'ubuntu-latest' ]
+        php: [ '7.2' ]
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: monacard
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306/tcp
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup PHP
+        uses: nanasess/setup-php@master
+        with:
+          php-version: ${{ matrix.php }}
+      - name: config settings
+        run: |
+          sed -e "s/USER = \"\*\*\*\*\*\"/USER = \"admin\"/g" config/config.php_ > config/config.php
+          sed -i -e "s/PASSWORD = \"\*\*\*\*\*\"/PASSWORD = \"password\"/g" config/config.php
+          rm config/config.php_
+      - name: download monacard1 metadata
+        run: |
+          php admin/script_download_monacard1_metadata.php
+          
