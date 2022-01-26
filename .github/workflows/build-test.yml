@@ -38,7 +38,9 @@ jobs:
           rm config/config.php_
       - name: download monacard1 metadata
         run: |
-          touch data/monacard1.0metadata.7z
-          php admin/script_download_monacard1_metadata.php
-          7z x data/monacard1.0metadata.7z
-          ls data
+          cd admin
+          php script_download_monacard1_metadata.php
+          cd ../data
+          ls
+          7z x monacard1.0metadata.7z
+          ls
