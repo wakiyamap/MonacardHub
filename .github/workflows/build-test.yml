@@ -43,7 +43,11 @@ jobs:
           cd admin
           php script_download_monacard1_metadata.php
           cd ../data
-          sha256sum monacard1.0metadata.7z
+          checksum=346adedab73f75507625bca3ccde0ca7dd713ac4083d8f0de058a6b7da22fd40
+          if ! echo "$checksum monacard1.0metadata.7z" | shasum -c -; then
+              echo "Checksum failed" >&2
+              exit 1
+          fi
           7z x monacard1.0metadata.7z
           cd ../
       - name: make tables & incert datas
