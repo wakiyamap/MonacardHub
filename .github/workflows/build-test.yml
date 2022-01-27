@@ -44,7 +44,7 @@ jobs:
           php script_download_monacard1_metadata.php
           cd ../data
           checksum=346adedab73f75507625bca3ccde0ca7dd713ac4083d8f0de058a6b7da22fd40
-          if ! echo "$checksum monacard1.0metadata.7z" | shasum -c -; then
+          if ! echo "$checksum monacard1.0metadata.7z" | sha256sum -c -; then
               echo "Checksum failed" >&2
               exit 1
           fi
@@ -54,8 +54,6 @@ jobs:
         run: |
           cd admin
           echo "make tables"
-          docker ps -a
-          mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "SHOW DATABASES"
           php script_make_tables.php
           echo "incert monacard1.0's data"
           php script_insert_monacard1.php
