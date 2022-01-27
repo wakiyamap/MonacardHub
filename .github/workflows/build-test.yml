@@ -41,6 +41,14 @@ jobs:
           cd admin
           php script_download_monacard1_metadata.php
           cd ../data
-          ls
           7z x monacard1.0metadata.7z
-          ls
+          cd ../
+      - name: make tables & incert datas
+        run: |
+          cd admin
+          echo "make tables"
+          php script_make_tables.php
+          echo "incert monacard1.0's data"
+          php script_insert_monacard1.php
+          echo "incert monacard2.0's data"
+          php script_insert_monacard2.php
