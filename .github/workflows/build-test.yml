@@ -32,6 +32,8 @@ jobs:
         uses: nanasess/setup-php@master
         with:
           php-version: ${{ matrix.php }}
+          # NOTICE抑制しています。必要なら下をコメントアウトしてください。
+          ini-values: error_reporting = E_ALL & ~E_NOTICE
       - name: config settings
         run: |
           sed -e "s/USER = \"\*\*\*\*\*\"/USER = \"admin\"/g" config/config.php_ > config/config.php
