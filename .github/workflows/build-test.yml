@@ -43,7 +43,7 @@ jobs:
           rm config/config.php_
       - name: download monacard1 metadata
         run: |
-          # monacard1.0のデータをダウンロード後、sha256sumで正しいデータか検証します。
+          # monacard1.0のデータをダウンロード後、sha256sumで正しいデータか検証します。問題なければ解凍します。
           cd admin
           php script_download_monacard1_metadata.php
           cd ../data
@@ -62,7 +62,7 @@ jobs:
           php script_make_tables.php
           echo -e "\nincert monacard1.0's data"
           php script_insert_monacard1.php
-          if test "mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e 'USE monacard; select count(id) from cards'" != "2913"; then
+          if test "mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e 'USE monacard; select count(id) from cards'" != 2913; then
               echo "record count is not 2913(monacard1.0)" >&2
               exit 1
           fi
