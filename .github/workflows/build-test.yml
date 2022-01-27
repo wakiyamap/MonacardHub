@@ -48,6 +48,8 @@ jobs:
         run: |
           cd admin
           echo "make tables"
+          docker ps -a
+          mysql --protocol=tcp -h localhost -P 3306 -u admin -p password -e "SHOW DATABASES"
           php script_make_tables.php
           echo "incert monacard1.0's data"
           php script_insert_monacard1.php
