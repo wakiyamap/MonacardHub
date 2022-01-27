@@ -55,10 +55,11 @@ jobs:
       - name: make tables & incert datas
         run: |
           cd admin
-          echo "make tables"
+          echo "\nmake tables"
           php script_make_tables.php
-          echo "incert monacard1.0's data"
+          echo "\nincert monacard1.0's data"
           php script_insert_monacard1.php
-          echo "incert monacard2.0's data"
+          mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "USE monacard; select count(id) from cards"
+          echo "\nincert monacard2.0's data"
           php script_insert_monacard2.php
-          mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "USE monacard; select * from cards"
+          mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "USE monacard; select count(id) from cards"
