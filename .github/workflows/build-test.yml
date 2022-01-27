@@ -36,6 +36,7 @@ jobs:
         run: |
           sed -e "s/USER = \"\*\*\*\*\*\"/USER = \"admin\"/g" config/config.php_ > config/config.php
           sed -i -e "s/PASSWORD = \"\*\*\*\*\*\"/PASSWORD = \"password\"/g" config/config.php
+          sed -i -e "s/PATH = \"localhost\"/PATH = \"127\.0\.0\.1\"/g" config/config.php
           rm config/config.php_
       - name: download monacard1 metadata
         run: |
