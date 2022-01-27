@@ -41,6 +41,7 @@ jobs:
           cd admin
           php script_download_monacard1_metadata.php
           cd ../data
+          sha256sum monacard1.0metadata.7z
           7z x monacard1.0metadata.7z
           cd ../
       - name: make tables & incert datas
