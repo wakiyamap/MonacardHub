@@ -62,15 +62,12 @@ jobs:
           php script_make_tables.php
           echo -e "\ninsert monacard1.0's data"
           php script_insert_monacard1.php
+          # 比較が何故か出来ないので一旦ファイルにcount数を出力してgrepで2913の文字が含まれてればOKとしています。 
           mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "USE monacard; select count(id) from cards" > datacountfile
           if ! grep 2913 datacountfile; then
               echo "record count is not 2913(monacard1.0)"
-              # exit 1
-          fi
-          if ! grep 2914 datacountfile; then
-              echo "record count is 2913(monacard1.0)"
-              # exit 1
+              exit 1
           fi
           echo -e "\ninsert monacard2.0's data"
           php script_insert_monacard2.php
-          # api辺りの検証を後で追加。多分変わりそうに思います。
+          # api辺りの検証を後で追加。多分変わりそうに思うので一旦保留です。
