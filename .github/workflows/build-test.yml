@@ -63,12 +63,11 @@ jobs:
           echo -e "\ninsert monacard1.0's data"
           php script_insert_monacard1.php
           mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "USE monacard; select count(id) from cards" > datacountfile
-          echo datacountfile
-          if [ "`echo datacountfile`" -eq 2913 ]; then
+          if grep 2913 datacountfile; then
               echo "record count is 2913(monacard1.0)"
               # exit 1
           fi
-          if [ "`echo datacountfile`" -ne 2913 ]; then
+          if grep 2914 datacountfile; then
               echo "record count is not 2913(monacard1.0)"
               # exit 1
           fi
