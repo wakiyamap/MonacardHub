@@ -62,12 +62,12 @@ jobs:
           php script_make_tables.php
           echo -e "\ninsert monacard1.0's data"
           php script_insert_monacard1.php
-          datacount=`mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "USE monacard; select count(id) from cards" | echo -e $(cat)`
-          if [ "$datacount" -eq 2913 ]; then
+          `mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "USE monacard; select count(id) from cards" > datacountfile`
+          if [ `cat datacountfile` -eq 2913 ]; then
               echo "record count is 2913(monacard1.0)"
               # exit 1
           fi
-          if [ "$datacount" -ne 2913 ]; then
+          if [ `cat datacountfile` -ne 2913 ]; then
               echo "record count is not 2913(monacard1.0)"
               # exit 1
           fi
