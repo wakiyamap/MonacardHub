@@ -54,23 +54,23 @@ jobs:
           fi
           7z x monacard1.0metadata.7z
           cd ../
-      - name: make tables & incert datas
+      - name: make tables & insert datas
         run: |
           # monacard1.0および2.0のデータを挿入します。1.0のデータについて2913件が挿入されているかの検証します。
           cd admin
           echo -e "\nmake tables"
           php script_make_tables.php
-          echo -e "\nincert monacard1.0's data"
+          echo -e "\ninsert monacard1.0's data"
           php script_insert_monacard1.php
           datacount=$(mysql --protocol=tcp -h localhost -P 3306 -u admin -ppassword -e "USE monacard; select count(id) from cards")
-          if [ "${datacount}" = 2913 ]; then
+          if [ "${datacount}" = "2913" ]; then
+              echo "record count is 2913(monacard1.0)" >&2
+              # exit 1
+          fi
+          if [ "${datacount}" != "2913" ]; then
               echo "record count is not 2913(monacard1.0)" >&2
               # exit 1
           fi
-          if [ "${datacount}" = 2914 ]; then
-              echo "record count is not 2914(monacard1.0)" >&2
-              # exit 1
-          fi
-          echo -e "\nincert monacard2.0's data"
+          echo -e "\ninsert monacard2.0's data"
           php script_insert_monacard2.php
           # api辺りの検証を後で追加。多分変わりそうに思います。
